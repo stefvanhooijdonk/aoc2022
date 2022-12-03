@@ -18,17 +18,8 @@ namespace aoc
             List<Round> rounds = new List<Round>();
 
             foreach(string line in lines){
-                var round = new Round(line);
-
-                //Console.WriteLine("{0} {1} {2}",round.opponent, round.strategy, round.Score);
-                rounds.Add(round);
-            }
-
-            Console.WriteLine("Read input.txt with: {0} rounds.\r\n",rounds.Count);
-            Console.WriteLine("Total score {0}.\r\n",rounds.Sum(r=> r.Score));
-
-
-
+            
+            }   
         }
     }
 
