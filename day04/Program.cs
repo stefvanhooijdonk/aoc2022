@@ -19,8 +19,10 @@ namespace aoc
             foreach(var l in lines){
                 list.Add(new CleaningPair(l));
             }
-            Console.WriteLine("Containing CleaningPairs {0}.\r\n",list.Where(cleaningpair => cleaningpair.FullyContains()).Count());
-            Console.WriteLine("Overlapping CleaningPairs {0}.\r\n",list.Where(cleaningpair => cleaningpair.Overlaps()).Count());
+            Console.WriteLine("Containing CleaningPairs {0}.\r\n",
+                list.Where(cleaningpair => cleaningpair.FullyContains()).Count());
+            Console.WriteLine("Overlapping CleaningPairs {0}.\r\n",
+                list.Where(cleaningpair => cleaningpair.Overlaps()).Count());
         }
     }
 
