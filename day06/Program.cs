@@ -20,20 +20,34 @@ namespace aoc
             Console.WriteLine("Read input.txt with: {0} lines.\r\n", lines.LongLength);
 
             var buffer = lines[0];
-            FindMarker(buffer, 4);
-            FindMarker(buffer, 14);
+            var marker = FindMarker(buffer, 4);
+            Console.WriteLine(
+                "Start-of-packet  marker found at index: {0} = {1} .",
+                marker.Index,
+                marker.Token);
+            marker = FindMarker(buffer, 14);
+            Console.WriteLine(
+                "Start-of-message marker found at index: {0} = {1} .",
+                marker.Index,
+                marker.Token);
         }           
 
-        internal static void FindMarker(string buffer, int markerLength){
+        public class Marker{
+            private const string invalid = "invalid";
+            public string Token = invalid;
+            public int Index;
+        }
+
+        internal static Marker FindMarker(string buffer, int markerLength){
             for(var index = markerLength-1; index < buffer.Length; index++){                
                 var marker = GetMarker(buffer,index,markerLength);
                 if(marker.Distinct().Count() == markerLength){
-                    Console.WriteLine("Marker: {0} position: {1}", 
-                        string.Concat(marker), 
-                        index + 1);
-                    break;
+                    return new Marker(){
+                        Index = index+1, 
+                        Token = string.Concat(marker)};
                 }
             }
+            return new Marker();
         }
 
         internal static List<char> GetMarker(string source, int index, int markerLength){
