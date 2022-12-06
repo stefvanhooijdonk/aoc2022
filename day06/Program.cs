@@ -20,35 +20,26 @@ namespace aoc
             Console.WriteLine("Read input.txt with: {0} lines.\r\n", lines.LongLength);
 
             var buffer = lines[0];
-
-            for(var index=3;index<buffer.Length;index++){                
-                var marker = buffer.Substring(index-3,4);
-                if(CheckCharsAreDifferent(marker)){
-                    Console.WriteLine("Start-of-packet Marker: {0} position: {1}", marker, index + 1);
-                    break;
-                }
-            }
-            for(var index=13;index<buffer.Length;index++){                
-                var marker = buffer.Substring(index-13,14);
-                if(CheckCharsAreDifferent(marker)){
-                    Console.WriteLine("Start of Message marker: {0} position: {1}", marker, index + 1);
-                    break;
-                }
-            }
+            FindMarker(buffer, 4);
+            FindMarker(buffer, 14);
         }           
 
-        public static int Count(string input, char substr)
-        {
-            return Regex.Matches(input, substr.ToString()).Count;
+        internal static void FindMarker(string buffer, int markerLength){
+            for(var index = markerLength-1; index < buffer.Length; index++){                
+                var marker = GetMarker(buffer,index,markerLength);
+                if(marker.Distinct().Count() == markerLength){
+                    Console.WriteLine("Marker: {0} position: {1}", 
+                        string.Concat(marker), 
+                        index + 1);
+                    break;
+                }
+            }
         }
 
-        internal static bool CheckCharsAreDifferent(string marker){
-
-            var result = true;
-            for(var i = 0; i<marker.Length;i++){
-                result = result && Count(marker, marker[i]) == 1;
-                if(!result) break;
-            }
+        internal static List<char> GetMarker(string source, int index, int markerLength){
+            var result = new List<char>();
+            var marker = source.Substring(index-markerLength+1,markerLength);
+            result.AddRange(marker.ToCharArray());
             return result;
         }
     }
