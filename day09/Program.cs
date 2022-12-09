@@ -68,6 +68,9 @@ namespace aoc
                         // this is to track the first problem/tail
                         //listCoordinatesVisited.Add(new Coordinate(tail.X,tail.Y));
                     }
+
+                    // walk the snake and propagate the step just taken allong the snake
+                    // skip the head of this snake. already processed just above this 
                     for(var snakeIndex=1;snakeIndex<snake.Count-1;snakeIndex++){
                         var s1 = snake[snakeIndex];
                         var s2 = snake[snakeIndex+1];
@@ -83,7 +86,12 @@ namespace aoc
 
             var count = listCoordinatesVisited.Distinct(new CoordinateComparer()).Count();
             Console.WriteLine("Head is at {0} {1}.\r\n", head.X, head.Y);
+            // problem 1
+            Console.WriteLine("Tail is at {0} {1}.\r\n", tail.X, tail.Y);
+            // problem 2:
             Console.WriteLine("Tail is at {0} {1}.\r\n", snake[9].X, snake[9].Y);
+
+            // problem 2:
             Console.WriteLine("Coordinates visited {0}.\r\n",count);
         }
 
@@ -113,21 +121,29 @@ namespace aoc
             var xdiff = head.X-tail.X; // either 1 or 2 or -1 -2
             var ydiff = head.Y-tail.Y; // either 1 or 2 or -1 -2
 
+            // quadrant 1 / make diagonal step
             if(xdiff>0 && ydiff>0){
                 tail.X++;
                 tail.Y++;
+                return;
             }
+            // quadrant 2 / make diagonal step
             if(xdiff>0 && ydiff<0){
                 tail.X++;
                 tail.Y--;
+                return;
             }
+            // quadrant 3 / make diagonal step
             if(xdiff<0 && ydiff>0){
                 tail.X--;
                 tail.Y++;
+                return;
             }
+            // quadrant 4 / make diagonal step
             if(xdiff<0 && ydiff<0){
                 tail.X--;
                 tail.Y--;
+                return;
             }
         }
     }
